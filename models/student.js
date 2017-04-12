@@ -9,7 +9,23 @@ module.exports = function(sequelize, DataTypes) {
       unique: true,
       validate: {
         notEmpty: true,
-        isEmail: true      }
+        isEmail: true,
+        isUnique: function (value, next) {
+            var self = this;
+            Student.find({where: {email: value}})
+                .then(function (student) {
+                    // reject if a different student wants to use the same email
+                    if (student && self.id !== student.id) {
+                        return next('Email already in use!');
+                    }
+                    return next();
+                })
+                .catch(function (err) {
+                    return next(err);
+                });
+        }
+
+      }
     },
     height: {
       type: DataTypes.INTEGER,
