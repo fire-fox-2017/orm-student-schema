@@ -10,6 +10,17 @@ let replServer = repl.start({prompt: '$_$> '});
 // db.Student.create({first_name: "Ben", last_name: "Roth", birthdate: "1988-03-14"});
 // db.Student.create({first_name: "Brandin", last_name: "Cook", birthdate: "1991-11-20"});
 
+let create = (first_name, last_name, birthdate, email, height, phone) => {
+	db.Student.create({first_name: first_name, last_name: last_name, birthdate: birthdate, email: email, height: height, phone: phone})
+	.then( student => {
+		console.log(`Created student ${student.id} ${student.first_name}`)
+	})
+	.catch( err => {
+		console.log(err.message);
+	})
+
+}
+
 
 
 let getFullName = (id) => {
@@ -47,10 +58,12 @@ let getAllData = () => {
 			console.log(student.first_name)
 			console.log(student.last_name)
 			console.log(student.getDataValue('full_name'))
+			// console.log(student.full_name);
 		})
 	})
 }
 
+replServer.context.create = create;
 replServer.context.getFullName = getFullName;
 replServer.context.getAge = getAge;
 replServer.context.getAllData = getAllData;

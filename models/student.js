@@ -3,7 +3,22 @@ module.exports = function(sequelize, DataTypes) {
   var Student = sequelize.define('Student', {
     first_name: DataTypes.STRING,
     last_name: DataTypes.STRING,
-    birthdate: DataTypes.DATE
+    birthdate: DataTypes.DATE,
+    email: { 
+      type: DataTypes.STRING,
+      validate: {
+        isEmail: true
+      }
+    },
+    height: {
+      type: DataTypes.INTEGER,
+      validate: {
+        min: 150.1
+      }
+    },
+    phone: {
+      type: DataTypes.STRING
+    }
   }, {
     classMethods: {
       associate: function(models) {
@@ -12,16 +27,20 @@ module.exports = function(sequelize, DataTypes) {
       getAllData: function(callback) {
         this.findAll()
           .then(students => {
-            students.forEach( student => {
-              // console.log(`--- ${student.id} ${student.first_name} ${student.last_name} ${student.birthdate} ${student.full_name}`);
+            // students.forEach( student => {
+            //   // console.log(`--- ${student.id} ${student.first_name} ${student.last_name} ${student.birthdate} ${student.full_name}`);
 
-              student.setDataValue("full_name", student.first_name + " " + student.last_name);
+            //   student.setDataValue("full_name", student.first_name + " " + student.last_name);
               
-              // console.log(`******* ${student.id} ${student.first_name} ${student.last_name} ${student.birthdate} ${student.getDataValue('full_name')}`);
-              // console.log(`here   ${student.getDataValue('full_name')}`);
+            //   // console.log(`******* ${student.id} ${student.first_name} ${student.last_name} ${student.birthdate} ${student.getDataValue('full_name')}`);
+            //   // console.log(`here   ${student.getDataValue('full_name')}`);
 
-              // console.log(student.toJSON());
-            })
+            //   // console.log(student.toJSON());
+            // })
+
+            for (let i = 0 ; i < students.length ; i++) {
+              students[i].setDataValue("full_name", students[i].first_name + " " + students[i].last_name);
+            }
 
             callback(students);
           })
