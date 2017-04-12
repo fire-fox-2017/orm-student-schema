@@ -6,9 +6,10 @@ module.exports = function(sequelize, DataTypes) {
     birthdate: DataTypes.DATE,
     email: { 
       type: DataTypes.STRING,
+      unique: true,
       validate: {
-        isEmail: true
-      }
+        notEmpty: true,
+        isEmail: true      }
     },
     height: {
       type: DataTypes.INTEGER,
@@ -62,6 +63,14 @@ module.exports = function(sequelize, DataTypes) {
       }
 
     }// end of instanceMethods
+  }, {
+    indexes: [
+      // Create a unique index on email
+      {
+        unique: true,
+        fields: ['email']
+      }
+    ]
   });
   return Student;
 };
