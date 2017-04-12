@@ -30,7 +30,7 @@ module.exports = function(sequelize, DataTypes) {
       type : DataTypes.STRING,
       validate : {
         isNumeric : true,
-        len : [9,14],
+        len : [9,14]
       }
     },
     tinggi: {
