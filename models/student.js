@@ -3,7 +3,7 @@ module.exports = function(sequelize, DataTypes) {
   var Student = sequelize.define('Student', {
     firstname: DataTypes.STRING,
     lastname: DataTypes.STRING,
-    birthdate: DataTypes.DATE,
+    birthdate: DataTypes.STRING,
     emails: {
       type : DataTypes.STRING,
       validate : {
@@ -30,7 +30,7 @@ module.exports = function(sequelize, DataTypes) {
       type : DataTypes.STRING,
       validate : {
         isNumeric : true,
-        len : [8,17]
+        len : [9,14],
       }
     },
     tinggi: {
@@ -44,26 +44,26 @@ module.exports = function(sequelize, DataTypes) {
       associate: function(models) {
         // associations can be defined here
       },
-      getAllData: function(callback) {
+      getAllData: function(callback){
         Student.findAll()
-          .then((students) => {
-            students.forEach((student) => {
-              student.full_name = student.getFullName();
-            })
-            callback(students);
+        .then((students) => {
+          students.forEach((student) => {
+            student.full_name = student.getFullName();
           })
+          callback(students);
+        })
       }
     },
     instanceMethods: {
-      getFullName: function(callback) {
+      getFullName: function (callback) {
         return `${this.firstname} ${this.lastname}`;
       },
-      getAge: function(callback) {
+      getAge: function (callback) {
         let birthYear = this.birthdate.split('-');
         let umur = 2017 - (+birthYear[2]);
         return `Nama : ${this.firstname} Umur: ${umur}`;
       }
     }
   });
-return Student;
+  return Student;
 };
