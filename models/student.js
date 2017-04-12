@@ -18,7 +18,25 @@ module.exports = function(sequelize, DataTypes) {
       }
     },
     phone: {
-      type: DataTypes.STRING
+      type: DataTypes.STRING,
+      validate: {
+        isLength: (value) => {
+          if(value.length <10 || value.length > 13)
+            throw new Error ('Phone length must be 10 - 13');
+        },
+        isNotLetters: (value) => {
+          // var regex = new RegExp('[a-z]+');
+          
+          if(/^[a-zA-Z]+$/.test(value))
+            throw new Error ('Phone not allow letters');
+        },
+        isNotAlphaNumbericCustom: (value) => {
+          if(/[a-zA-Z]+/.test(value))
+            throw new Error ('Phone not allow alphanumeric');
+        }
+
+      }
+
     }
   }, {
     classMethods: {
