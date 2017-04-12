@@ -8,6 +8,26 @@ module.exports = function(sequelize, DataTypes) {
     classMethods: {
       associate: function(models) {
         // associations can be defined here
+      },
+      getAllData: function(callback) {
+        this.findAll()
+          .then(students => {
+            students.forEach( student => {
+              // console.log(`--- ${student.id} ${student.first_name} ${student.last_name} ${student.birthdate} ${student.full_name}`);
+
+              student.setDataValue("full_name", student.first_name + " " + student.last_name);
+              
+              // console.log(`******* ${student.id} ${student.first_name} ${student.last_name} ${student.birthdate} ${student.getDataValue('full_name')}`);
+              // console.log(`here   ${student.getDataValue('full_name')}`);
+
+              // console.log(student.toJSON());
+            })
+
+            callback(students);
+          })
+          .catch(err => {
+            console.log(err.message);
+          })
       }
     },
     instanceMethods: {

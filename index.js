@@ -36,8 +36,24 @@ let getAge = (id) => {
 
 }
 
+let getAllData = () => {
+	db.Student.getAllData( students => {
+		// console.log("*****")
+		// console.log(students)
+
+		students.forEach( student => {
+			// console.log(JSON.stringify(student.toJSON()))
+			console.log(student.id)
+			console.log(student.first_name)
+			console.log(student.last_name)
+			console.log(student.getDataValue('full_name'))
+		})
+	})
+}
+
 replServer.context.getFullName = getFullName;
 replServer.context.getAge = getAge;
+replServer.context.getAllData = getAllData;
 
 
 
