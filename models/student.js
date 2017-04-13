@@ -52,6 +52,12 @@ module.exports = function(sequelize, DataTypes) {
           msg: "Letters are not allowed"
         }
       }
+    },
+    name:{
+      type: DataTypes.STRING
+    },
+    address:{
+      type: DataTypes.STRING
     }
   }, {
     classMethods: {

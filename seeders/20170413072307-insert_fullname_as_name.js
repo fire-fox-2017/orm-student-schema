@@ -1,5 +1,5 @@
 'use strict';
-
+const db = require('../models');
 module.exports = {
   up: function (queryInterface, Sequelize) {
     /*
@@ -12,20 +12,26 @@ module.exports = {
         isBetaMember: false
       }], {});
     */
-    return queryInterface.bulkInsert('Students', [{
-      firstname: 'Oscar',
-      lastname: 'Hermawan',
-      birthdate: new Date(1990,10,26),
-      createdAt: new Date(),
-      updatedAt: new Date()
-    },
-  {
-    firstname: 'Zani',
-    lastname: 'Akbar',
-    birthdate: new Date(1994,11,11),
-    createdAt: new Date(),
-    updatedAt: new Date()
-  }], {});
+    return new Promise((resolve,reject) =>{
+      db.Student.findAll()
+      .then((students)=>{
+        if(students){
+          let promises = [];
+          students.forEach((student) => {
+            let promise = student.updateAttributes({
+              name: student.getFullName()
+            });
+            promises.push(promise);
+          })
+          Promise.all(promises).then(function(data){
+            resolve(data);
+          })
+          .catch((err)=>{
+            reject(err);
+          })
+        }
+      })
+    })
   },
 
   down: function (queryInterface, Sequelize) {
@@ -36,6 +42,5 @@ module.exports = {
       Example:
       return queryInterface.bulkDelete('Person', null, {});
     */
-
   }
 };

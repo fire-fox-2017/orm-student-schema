@@ -1,1 +1,1 @@
-# orm-student-schema
+# orm-symmetric-migrations
