@@ -11,27 +11,35 @@ db.Student.getAllData(function(students){
      console.log(`full Name : ${student.first_name} ${student.last_name}`);
      console.log(`birthdate: ${student.birthdate.getDate()}-${student.birthdate.getMonth() + 1}-${student.birthdate.getFullYear()}`);
      console.log(`Age : ${student.getAge()}\n`);
-   })
- })
+   });
+ });
 
 let data = {
    firstname : "Testing",
    lastname : "Rahasia",
-   birthday : "1991-02-12",
-   email : "mixed@gmail.com",
-   phone : "12345678912345678",
+   birthdate : new Date('1991-02-12'),
+   email : "mixedsad@gmail.com",
+   phone : "08129912099",
    height : "150"
  }
 
-let insert = ()=>{
-   db.Student
-     .create(data)
-     .then((stdObj)=>{
-     console.log(stdObj.dataValues);
-     })
-     .catch((err)=>{
-       console.log(err.message);
-     })
+let insert = () => {
+   db.Student.create({
+    first_name: data.firstname,
+    last_name: data.lastname,
+    birthdate: data.birthdate,
+    email: data.email,
+    height: data.height,
+    phone: data.phone
+   })
+   .then(() => {
+      console.log('success add data');
+   })
+   .catch((err) => {
+      console.log(err);
+   });
+     
  }
 
-insert();
+// insert();
+
