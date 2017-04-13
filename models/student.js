@@ -3,7 +3,54 @@ module.exports = function(sequelize, DataTypes) {
   var Student = sequelize.define('Student', {
     first_name: DataTypes.STRING,
     last_name: DataTypes.STRING,
-    birthdate: DataTypes.DATE
+    birthdate: DataTypes.DATE,
+    height: {
+      type: DataTypes.INTEGER,
+      isNumeric: true,
+      min: 150
+    },
+    phone: {
+      type: DataTypes.STRING,
+      validate: {
+        len: {
+          args: [10, 13],
+          msg: 'Phone length must be 10 - 13'
+        },
+        isNumeric: {
+          args: true,
+          msg: 'Phone not allow letters'
+        },
+        isAlphanumeric: {
+          args: true,
+          msg: 'Phone not allow alphanumeric'
+        }
+      }
+    },
+    email: {
+      type: DataTypes.STRING,
+      validate: {
+        isEmail: true,
+        isUnique: function(val, nextVal) {
+          Student.find({
+            where: {email:val},
+            attributes: ['id']
+          }).then((data, err) => {
+            if(data) {
+              return next('email already taken');
+            } 
+            if (err) {
+             next();
+            }
+          });
+        }
+      }
+    },
+    height: {
+      type: DataTypes.INTEGER,
+      validate: {
+        min:150
+      }
+    },
   }, {
     classMethods: {
       associate: function(models) {
