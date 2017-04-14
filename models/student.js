@@ -14,23 +14,58 @@ module.exports = function(sequelize, DataTypes) {
               emails : value
             }
           })
-          .then((err)=>{
-            if(err){
-              return next('email already in use')
+          .then((value) => {
+            if(value){
+              return next(new Error("Email Sudah Dipakai"));
+            } else {
+              return next();
             }
-            return next()
           })
-          .catch((err)=>{
-            return next(err)
-          })
+          // .then((err)=>{
+          //   if(err){
+          //     return next('Email Sudah Digunakan')
+          //   }
+          //   return next()
+          // })
+          // .catch((err)=>{
+          //   return next(err)
+          // })
         }
       }
     },
     phone: {
       type : DataTypes.STRING,
       validate : {
-        isNumeric : true,
-        len : [9,14]
+        // isNumeric : {
+        //   args: true,
+        //   msg: "Harus Angka"
+        // },
+        len : {
+          args: [10,13],
+          msg: "Panjang Ukuran Angka Telepon 10-13"
+        },
+        isNumeric: {
+          args: true,
+          msg: 'Phone not allow letters'
+        },
+        isAlphanumeric: {
+          args: true,
+          msg: 'Phone not allow alphanumeric'
+        }
+        // isCek : function(value) {
+        //   // let pola1 = /[a-zA-Z]+/g; //cek huruf
+        //   let pola1 = /[a-zA-Z]+/g; //cek huruf
+        //   let pola2 = /\d/g; //cek angka
+        //   let angka = parseInt(value);
+        //   let tes1 = pola1.test(value);
+        //   let tes2 = pola2.test(angka);
+        //   if(tes1 == true && tes2 == true){
+        //     throw new Error('Phone not allow alphanumeric')
+        //   } else if(tes1 == true && tes2 == false){
+        //     throw new Error('Phone not allow letters')
+        //   }
+        // }
+
       }
     },
     tinggi: {
