@@ -10,6 +10,7 @@ module.exports = function(sequelize) {
     email: {
             type: Sequelize.TEXT,
             allowNull: false,
+            //isUnique: true
             validate: {
                 isEmail: true,
                 isUnique: function(value, next) {
@@ -35,9 +36,15 @@ module.exports = function(sequelize) {
         phone: {
             type: Sequelize.STRING,
             allowNull: false,
+
             validate: {
-                len: [8,13]
-                
+                isAlphanumeric: function (value, next) {
+                              let phoneno = /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/im
+                              if(phoneno.test(value)) 
+                                next();
+                              return next('Format phone not valid');
+                              
+                            }  
             }
 }
   }, {
