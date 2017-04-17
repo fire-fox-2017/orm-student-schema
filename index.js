@@ -4,21 +4,21 @@ const replServer = repl.start({prompt:'>=>=> '});
 const folder = require('./models');
 
 let insertStudent = (firstname,lastname,birthdate,email,height,phone) => {
-  folder.Student.create({
-    first_name : firstname,
-    "last_name" : lastname,
-    "birth_date" : birthdate,
-    "email" : email,
-    "height" : height,
-    "phone" : phone
-  })
-  .then(() => {
-    console.log('success!');
-  })
-  .catch((err) => {
-    //console.log(db.Student.msg);
-    console.log(err.message);
-  })
+    folder.Student.create({
+      first_name : firstname,
+      "last_name" : lastname,
+      "birth_date" : birthdate,
+      "email" : email,
+      "height" : height,
+      "phone" : phone
+    })
+    .then(() => {
+      console.log('success!');
+    })
+    .catch((err) => {
+      //console.log(db.Student.msg);
+      console.log(err.message);
+    })
 }
 
 let showAllStudent = function (){
@@ -32,7 +32,7 @@ let showAllStudent = function (){
 let showAllStudentAge = function (){
   folder.Student.findAll().then(student =>{
     for(let i=0;i<student.length;i++){
-      console.log(student[i].getAge());
+      console.log(`${student[i].getFullName()}: ${student[i].getAge()}`);
     }
   })
 }
@@ -46,10 +46,10 @@ let showAllStudentDetail = function(){
     //   console.log(student.full_name);
     // })
     for(let i=0;i<students.length;i++){
-      console.log(students[i].id);
-      console.log(students[i].first_name);
-      console.log(students[i].last_name);
-      console.log(students[i].full_name);
+      console.log(`id: ${students[i].id}`);
+      console.log(`first name: ${students[i].first_name}`);
+      console.log(`last name: ${students[i].last_name}`);
+      console.log(`full name: ${students[i].full_name}`);
     }
   })
 }
