@@ -12,7 +12,7 @@ module.exports = {
         isBetaMember: false
       }], {});
     */
-    return queryInterface.bulkInsert('Student',
+    return queryInterface.bulkInsert('students',
     [{
       first_name: 'Joko',
       last_name: 'Santoso',
