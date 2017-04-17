@@ -35,4 +35,4 @@ var UserModel = sequelize.define('User', {
 
 });
 
-insert_student("papank","sarupank",120,"0288384956","1989-06-23","cumigmail.com")
+insert_student("Joko","Agus",120,"0288384956","1989-06-23","joko@gmail.com")
